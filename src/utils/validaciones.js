@@ -54,4 +54,20 @@
       return false;
     }
   };
+  export const LetrasNumeros = (texto) => {
+    let NomApeRegex = /^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ0-9+\-.\s]+$/;
+    return NomApeRegex.test(texto);
+  }
+
+  // Valida que el texto contenga solo letras (incluye acentos, Ñ y espacios)
+  export const SoloLetras = (texto) => {
+    let letrasRegex = /^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ\s]+$/;
+    return letrasRegex.test(texto);
+  }
+
+  // Valida que el texto contenga solo números (dígitos)
+  export const SoloNumeros = (texto) => {
+    let numerosRegex = /^\d+$/;
+    return numerosRegex.test(texto);
+  }
   
