@@ -3,6 +3,7 @@ import './css/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import{ BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import DatosVehiculos from './components/Vehiculos/DatosVehiculos';
+import DatosTalleres from './components/talleres/DatosTalleres';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 
@@ -56,6 +57,7 @@ class App extends React.Component {
               <Routes>
                <Route path='/' element={<Login/>} />
               <Route path='/datosvehiculos' element={<DatosVehiculos notificacion={this.notificacion} />} />
+              <Route path='/datosTalleres' element={<DatosTalleres notificacion={this.notificacion} />} />
                <Route path='/dashboard' element={<Dashboard/>} />
               </Routes>
             </Router>
@@ -65,4 +67,5 @@ class App extends React.Component {
 }
 
 export default App;
+
 
