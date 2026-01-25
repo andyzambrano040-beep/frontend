@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { API_URL } from "../services/apirest";
+import { url_api } from "../../services/apirest";
 import Nuevo from "./Nuevo";
-import { confirm } from "./Confirmation";
+import { confirm } from "../Confirmation";
 
 
 class DatosTalleres extends React.Component {
@@ -48,7 +48,7 @@ class DatosTalleres extends React.Component {
   }
 
   cargarDatos = () => {
-    let url = API_URL + "talleres?page=" + this.state.paginaActual + "&cadena=" + this.state.cadenaDeBusqueda;
+    let url = url_api + "talleres?page=" + this.state.paginaActual + "&cadena=" + this.state.cadenaDeBusqueda;
     // console.log(this.state.token);
 
     axios
@@ -99,7 +99,7 @@ class DatosTalleres extends React.Component {
   eliminar = async (tall_id, tall_nombre) => {
     const notificacion = this.props.notificacion;
     if (await confirm(`¿Estás seguro de eliminar el taller con nombre: ${tall_nombre}?`)) {
-      let url = API_URL + "talleres/" + tall_id;
+      let url = url_api + "talleres/" + tall_id;
       axios
         .delete(url, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
         .then(() => {
