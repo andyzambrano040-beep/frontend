@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { API_URL } from "../services/apirest";
-import { LetrasNumeros, SoloLetras, SoloNumeros } from "../utils/validaciones";
+import { url_api } from "../../services/apirest";
+import { LetrasNumeros, SoloLetras, SoloNumeros } from "../../utils/validaciones";
 
 const Nuevo = ({ tallerE, onClose, onGuardar, notificacion }) => {
   // 1. Estado inicial del formulario
@@ -80,8 +80,8 @@ const Nuevo = ({ tallerE, onClose, onGuardar, notificacion }) => {
     const method = tallerE ? "put" : "post";
     // Si editamos, agregamos el ID a la URL. Si creamos, usamos la URL base.
     const url = tallerE
-      ? API_URL + `talleres/${tallerE.tall_id}`
-      : API_URL + "talleres";
+      ? url_api + `talleres/${tallerE.tall_id}`
+      : url_api + "talleres";
 
     try {
       await axios({
