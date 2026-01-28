@@ -4,6 +4,7 @@ import axios from "axios";
 import { url_api } from "../../services/apirest";
 import Nuevo from "./Nuevo";
 import { confirm } from "../Confirmation";
+import Headers from "../Header";
 
 class DatosPropietarios extends React.Component {
   searchTimeout = null;
