@@ -1,6 +1,6 @@
 import React, { useState, useEffect, use } from 'react';
 import axios from 'axios';
-import { API_URL } from "../../services/apirest";
+import { url_api } from "../../services/apirest";
 import { soloLetras, validarNumeros } from '../../utils/validaciones';
 
 
@@ -87,8 +87,8 @@ if (soloLetras(form.prop_nombre) === false) {
     const method = propietarioE ? 'put' : 'post';
     // Si editamos, agregamos el ID a la URL. Si creamos, usamos la URL base.
     const url = propietarioE 
-        ? API_URL + `propietarios/${propietarioE.prop_id}`
-        : API_URL + 'propietarios';
+        ? url_api + `propietarios/${propietarioE.prop_id}`
+        : url_api + 'propietarios';
 
     try {
       await axios({
