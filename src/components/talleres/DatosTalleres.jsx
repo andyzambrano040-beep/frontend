@@ -115,6 +115,7 @@ class DatosTalleres extends React.Component {
     return (
       <div>
         <div className="col-10 position-absolute top-0 start-50 translate-middle-x">
+          <Header />
           <h1>Datos de talleres</h1>
           <button className="btn btn-success" onClick={this.mostrarModalNuevo}> Nuevo registro</button>
           <input type="text" placeholder={"Busqueda por Nombre del Taller"} onKeyPress={this.BusquedaTexto} style={{ marginLeft: "10px", textAlign: "center", width: "400px" }} />
@@ -228,3 +229,4 @@ function ContenedorNavegacion(props) {
   return <DatosTalleres {...props} navigate={navigate} />;
 }
 export default ContenedorNavegacion;
+
