@@ -162,7 +162,7 @@ class DatosPropietarios extends React.Component {
     return (
       <div>
         <div className="col-10 position-absolute top-30 start-50 translate-middle-x">
-
+          <Header />
           <h1>Datos de Propietarios</h1>
           <button className="btn btn-primary" onClick={this.mostrarModalNuevo}>Nuevo registro</button>
           <input
