@@ -11,8 +11,8 @@ function Header() {
         <Link to="/datostalleres">
           <Button style={{ margin: "10px" }}>Talleres</Button>
         </Link>
-        <Link to="/datospersonas">
-          <Button>Propietarios</Button>
+        <Link to="/datosPropietarios">
+          <Button style={{ margin: "10px" }}>Propietarios</Button>
         </Link>
       </center>
     </div>
