@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { API_URL } from "../../services/apirest";
+import { url_api } from "../../services/apirest";
 import Nuevo from "./Nuevo";
 import { confirm } from "../Confirmation";
 
@@ -42,7 +42,7 @@ class DatosPropietarios extends React.Component {
   };
   cargarDatos = () => {
     const cadena = encodeURIComponent(this.state.cadenaDeBusqueda || '');
-    const url = API_URL + "propietarios?page=" + this.state.paginaActual + "&cadena=" + cadena;
+    const url = url_api + "propietarios?page=" + this.state.paginaActual + "&cadena=" + cadena;
     console.log('[cargarDatos] solicitar URL:', url, 'cadenaDeBusqueda:', this.state.cadenaDeBusqueda);
 
     axios
@@ -144,7 +144,7 @@ class DatosPropietarios extends React.Component {
   eliminar = async (prop_id, prop_nombre) => {
     const notificacion = this.props.notificacion;
     if (await confirm(`¿Estás seguro de eliminar el propietario con nombre: ${prop_nombre}?`)) {
-      let url = API_URL + "propietarios/" + prop_id;
+      let url = url_api + "propietarios/" + prop_id;
       axios
         .delete(url, { headers: { 'Authorization': `Bearer ${this.state.token}` } })
         .then(() => {
