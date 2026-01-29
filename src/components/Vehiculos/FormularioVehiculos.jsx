@@ -56,6 +56,7 @@ const FormularioVehiculos = ({ vehiculoAEditar, onClose, onGuardar, notificacion
       ...form,
       [name]: value,
     });
+    console.log(form)
   };
 
   // 4. Envío del formulario (Create o Update)
@@ -90,8 +91,8 @@ const FormularioVehiculos = ({ vehiculoAEditar, onClose, onGuardar, notificacion
       setLoading(false);
       return;
     }
-    if (form.prop_id && !propIdVehi(form.prop_id)) {
-      notificacion("ID de propietario inválido.");
+    if (!propIdVehi(form.prop_id)) {
+      notificacion("ID de Propieterio inválido");
       setLoading(false);
       return;
     }
