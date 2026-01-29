@@ -4,12 +4,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import{ BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import DatosVehiculos from './components/Vehiculos/DatosVehiculos';
 import DatosTalleres from './components/talleres/DatosTalleres';
-import DatosPropietarios from './components/propietarios/DatosPropietarios';
+import DatosPersonas from './components/propietarios/DatosPropietarios';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 
 class App extends React.Component {
-    constructor(props) {
+     constructor(props) {
     super(props);
     this.state = {
       NoModal: true,
@@ -56,18 +56,16 @@ class App extends React.Component {
         <div className='notificacion'></div>
             <Router>
               <Routes>
-               <Route path='/' element={<Login/>} />
-              <Route path='/datosvehiculos' element={<DatosVehiculos notificacion={this.notificacion} />} />
-                  <Route path='/datosTalleres' element={<DatosTalleres notificacion={this.notificacion} />} />
-                  <Route path='/datosPropietarios' element={<DatosPropietarios notificacion={this.notificacion} />} />
-                  <Route path='/dashboard' element={<Dashboard/>} />
-                  </Routes>
-                </Router>
+                <Route path='/' element={<Login/>} />
+                <Route path='/datosvehiculos' element={<DatosVehiculos notificacion={this.notificacion} EditarVariable={this.EditarVariable} idForaneo={this.state.idForaneo} datoForaneo={this.state.datoForaneo}/>} />
+                <Route path='/datostalleres' element={<DatosTalleres notificacion={this.notificacion} />} />
+                <Route path='/datospropietarios' element={<DatosPersonas notificacion={this.notificacion} NoModal={this.state.NoModal} />} />
+               <Route path='/dashboard' element={<Dashboard/>} />
+              </Routes>
+            </Router>
       </div>
     );
   }
 }
 
 export default App;
-
-
