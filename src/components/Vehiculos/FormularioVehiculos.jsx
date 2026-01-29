@@ -3,7 +3,7 @@ import axios from "axios";
 import { url_api } from "../../services/apirest";
 import { placaVehi, colorVehi, marcaVehi, modeloVehi, anioVehi, propIdVehi} from "../../utils/validaciones";
 
-const FormularioVehiculos = ({ vehiculoAEditar, onClose, onGuardar, notificacion }) => {
+const FormularioVehiculos = ({ vehiculoAEditar, onClose, onGuardar, notificacion, abrirModal, datoForaneo, idForaneo }) => {
   
 
   // 1. Estado inicial del formulario
@@ -38,6 +38,16 @@ const FormularioVehiculos = ({ vehiculoAEditar, onClose, onGuardar, notificacion
       });
     }
   }, [vehiculoAEditar]);
+
+  useEffect(() => {
+    // Si idForaneo tiene un valor real (no es vacío ni "0")
+    if (idForaneo && idForaneo !== "0") {
+      setForm(estadoAnterior => ({
+        ...estadoAnterior,
+        prop_id: idForaneo // Actualizamos el ID interno del formulario
+      }));
+    }
+  }, [idForaneo]);
 
   // 3. Manejador de cambios en los inputs
   const handleChange = (e) => {
@@ -187,13 +197,21 @@ const FormularioVehiculos = ({ vehiculoAEditar, onClose, onGuardar, notificacion
         </div>
 
         <div className="form-group">
-          <label>Id Propietario:</label>
+          <label>Propieterio:</label>
+          <input
+            type="text" name="propieterio" value={datoForaneo} onClick={abrirModal}
+            className="form-control"
+          />
+        </div>
+
+        <div className="form-group">
+          
           <input
             type="text"
             name="prop_id"
             value={form.prop_id}
             onChange={handleChange}
-            className="form-control"
+            className="form-control" hidden
           />
         </div>
 
