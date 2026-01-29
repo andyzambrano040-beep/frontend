@@ -2,9 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { url_api } from "../../services/apirest";
-import FormularioVehiculos from "./FormularioVehiculos";
+import FormularioVehiculos from "./FormularioVehiculos.jsx";
 import { confirm } from "../Confirmation";
 import Header from "../Header";
+import modal from "../../css/Modal.css";
+import DatosPropietatios from "../propietarios/DatosPropietarios.jsx";
 
 class DatosVehiculos extends React.Component {
   state = {
@@ -13,33 +15,46 @@ class DatosVehiculos extends React.Component {
     cadenaDeBusqueda: "",
     token: localStorage.getItem("token"),
     total_paginas: 0,
-    mostrarMoadal: false,
+    mostrarModal: false,
     vehiculoSeleccionado: null,
+    mostrarModalWin: false,
   };
 
   componentDidMount = () => {
     this.cargarDatos();
   };
 
-  mostrarMoadalNuevo = () => {
+  abrirModal = () => {
+    this.setState({ mostrarModalWin: true });
+  };
+
+  cerrarModalWin = () => {
+    this.setState({ mostrarModalWin: false });
+  };
+
+  mostrarModalNuevo = () => {
+    const {EditarVariable}  = this.props;
+    EditarVariable("", "");
     this.setState({
-      mostrarMoadal: true,
+      mostrarModal: true,
       vehiculoSeleccionado: null,
     });
   };
 
-  mostrarMoadalEditar = (vehiculo) => {
+  mostrarModalEditar = (value) => {
+    const { EditarVariable } = this.props;
+    EditarVariable(value.vehi_id, value.prop_nombre);
     this.setState({
-      mostrarMoadal: true,
-      vehiculoSeleccionado: vehiculo, // Pasamos el objeto completo del vehículo
+      mostrarModal: true,
+      vehiculoSeleccionado: value,
     });
   };
 
   cerrarModal = () => {
-    this.setState({ mostrarMoadal: false, vehiculoSeleccionado: null });
+    this.setState({ mostrarModal: false, vehiculoSeleccionado: null });
   };
 
-  alGurdar = () => {
+  alGuardar = () => {
     this.cargarDatos();
     this.cerrarModal();
   };
@@ -130,7 +145,7 @@ class DatosVehiculos extends React.Component {
           <div className="d-flex justify-content-center gap-3">
             <button
               className="btn btn-success"
-              onClick={this.mostrarMoadalNuevo}
+              onClick={this.mostrarModalNuevo}
             >
               Nuevo registro
             </button>
@@ -145,9 +160,12 @@ class DatosVehiculos extends React.Component {
             />
           </div>
 
-          <table className="table table-hover shadow-sm mt-4">
-            <thead className="table-dark">
-              <tr>
+          <table
+            className="table table-hover shadow-sm mt-4"
+            style={{ borderCollapse: "collapse" }}
+          >
+            <thead>
+              <tr style={{ borderBottom: "2px solid #ddd" }}>
                 <th>ID</th>
                 <th>Placa</th>
                 <th>Color</th>
@@ -160,7 +178,7 @@ class DatosVehiculos extends React.Component {
             </thead>
             <tbody>
               {this.state.registros.map((value, index) => (
-                <tr key={index}>
+                <tr key={index} style={{ borderBottom: "1px solid #ddd" }}>
                   <th scope="row">{value.vehi_id}</th>
                   <td>{value.vehi_placa}</td>
                   <td>{value.vehi_color}</td>
@@ -169,54 +187,48 @@ class DatosVehiculos extends React.Component {
                   <td>{value.vehi_anio}</td>
                   <td>{value.prop_nombre}</td>
                   <td>
-                    {/* Icono Editar */}
-                    <button
-                      className="btn btn-link p-0 me-2"
-                      onClick={() => this.mostrarMoadalEditar(value)}
-                    >
+                    
                       <svg
+                        onClick={() => this.mostrarModalEditar(value)}
                         xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
+                        width="28"
+                        height="28"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="#007aff"
-                        strokeWidth="2"
+                        strokeWidth="1"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       >
-                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                        <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                        <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                        <path d="M16 5l3 3" />
                       </svg>
-                    </button>
 
-                    {/* Icono Eliminar */}
-                    <button
-                      className="btn btn-link p-0"
-                      onClick={() =>
-                        this.eliminar(
-                          value.vehi_id,
-                          value.vehi_placa + "" + value.vehi_marca,
-                        )
-                      }
-                    >
                       <svg
+                        onClick={() =>
+                          this.eliminar(
+                            value.vehi_id,
+                            value.vehi_placa + " " + value.vehi_marca,
+                          )
+                        }
                         xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
+                        width="28"
+                        height="28"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="#ff2d55"
-                        strokeWidth="2"
+                        strokeWidth="1"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       >
-                        <polyline points="3 6 5 6 21 6" />
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                        <line x1="10" y1="11" x2="10" y2="17" />
-                        <line x1="14" y1="11" x2="14" y2="17" />
+                        <path d="M4 7l16 0" />
+                        <path d="M10 11l0 6" />
+                        <path d="M14 11l0 6" />
+                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
                       </svg>
-                    </button>
+                    
                   </td>
                 </tr>
               ))}
@@ -243,7 +255,7 @@ class DatosVehiculos extends React.Component {
           </div>
 
           {/* Modal */}
-          {this.state.mostrarMoadal && (
+          {this.state.mostrarModal && (
             <div className="modal-overlay" style={modalStyles.Overlay}>
               <div
                 className="modal-content shadow-lg"
@@ -252,8 +264,24 @@ class DatosVehiculos extends React.Component {
                 <FormularioVehiculos
                   vehiculoAEditar={this.state.vehiculoSeleccionado}
                   onClose={this.cerrarModal}
-                  onGuardar={this.alGurdar}
+                  onGuardar={this.alGuardar}
                   notificacion={this.props.notificacion}
+                  abrirModal={this.abrirModal}
+                  datoForaneo={this.props.datoForaneo}
+                  idForaneo={this.props.idForaneo}
+                />
+              </div>
+            </div>
+          )}
+          {this.state.mostrarModalWin && (
+            <div className="modal">
+              <div className="contenido-modal">
+                <span className="close" onClick={this.cerrarModalWin}>
+                  &times;
+                </span>
+                <DatosPropietatios
+                  EditarVariable={this.props.EditarVariable}
+                  cerrarModal={this.cerrarModalWin}
                 />
               </div>
             </div>
