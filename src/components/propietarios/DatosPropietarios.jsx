@@ -19,6 +19,12 @@ class DatosPropietarios extends React.Component {
     mostrarModal: false,
     propietarioSeleccionado: null
   };
+  cambiarIdForaneo(codigo, dato) {
+    const { EditarVariable } = this.props;
+    EditarVariable(codigo, dato);
+    const { cerrarModal } = this.props;
+    cerrarModal();
+  };
   componentDidMount = () => {
     this.cargarDatos();
   };
@@ -162,9 +168,13 @@ class DatosPropietarios extends React.Component {
     return (
       <div>
         <div className="col-10 position-absolute top-30 start-50 translate-middle-x">
-          <Header />
+          {this.props.NoModal === true && (
+          <Headers />
+          )}
           <h1>Datos de Propietarios</h1>
+          {this.props.NoModal === true && (
           <button className="btn btn-primary" onClick={this.mostrarModalNuevo}>Nuevo registro</button>
+          )}
           <input
             type="text"
             placeholder={"Busqueda por Nombre del Propietario"}
@@ -205,6 +215,8 @@ class DatosPropietarios extends React.Component {
                     <td>{value.prop_direccion}</td>
                     <td>{value.user_id}</td>
                     <td>
+                    {this.props.NoModal === true ? (
+                    <div>
                       <svg
                         onClick={() => this.mostrarModalEditar(value)}
                         xmlns="http://www.w3.org/2000/svg"
@@ -240,6 +252,28 @@ class DatosPropietarios extends React.Component {
                         <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
                         <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
                       </svg>
+                    </div>
+                    ) : (
+                    <div>
+                      <svg
+                        onClick={() => this.cambiarIdForaneo(value.prop_id, value.prop_nombre)}
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32"
+                        height="32"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="#4cd964"
+                        stroke-width="1"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M8 13v-8.5a1.5 1.5 0 0 1 3 0v7.5" />
+                        <path d="M11 11.5v-2a1.5 1.5 0 1 1 3 0v2.5" />
+                        <path d="M14 10.5a1.5 1.5 0 0 1 3 0v1.5" />
+                        <path d="M17 11.5a1.5 1.5 0 0 1 3 0v4.5a6 6 0 0 1 -6 6h-2h.208a6 6 0 0 1 -5.012 -2.7a69.74 69.74 0 0 1 -.196 -.3c-.312 -.479 -1.407 -2.388 -3.286 -5.728a1.5 1.5 0 0 1 .536 -2.022a1.867 1.867 0 0 1 2.28 .28l1.47 1.47" />
+                      </svg>
+                   </div>
+                    )}
                     </td>
                   </tr>
                 );
